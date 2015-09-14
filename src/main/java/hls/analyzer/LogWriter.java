@@ -12,7 +12,7 @@ public class LogWriter {
 		_fileName = fileName;
         try {
         	if(file == null){
-	            file= new FileHandler("C:\\Users\\hzaidi\\M3U8ParserLogs\\" + _fileName + _filePostFix);        	
+	            file= new FileHandler(_fileName + _filePostFix);        	
 	            logger.addHandler(file);
 	            SimpleFormatter formatter = new SimpleFormatter();  
 	            file.setFormatter(formatter);  
