@@ -1,6 +1,12 @@
 package hls.analyzer;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,7 +16,7 @@ public class MasterTagValidator implements IMasterTagValidator{
 	
 	public void checkEXTXMEDIA(List<String> dataFileArray) {
 		for (String dataItem : dataFileArray) {
-			if(dataItem.matches(Constants.tagRegex)){
+			if(dataItem.matches(Constants.mediaRegex)){
 				String type = parseStringAttr(dataItem,Constants.typeRegex);
 				//Validating the Media type attribute
 				//Media type attribute should be (AUDIO,VEDIO,SUBTITLES or CLOSED-CAPTION)
@@ -31,6 +37,11 @@ public class MasterTagValidator implements IMasterTagValidator{
 				if(groupId == null){
 					LogWriter.log("Group id is required and its missing from the menifest file.");
 				}
+				
+				
+				//TODO More attributes can be verified here in future
+				// e.g. Language, Accoc-Language, Name, Default, Autoselect, Forced
+				// instream-id, characterstics.
 						
 			}
 		}
@@ -38,7 +49,24 @@ public class MasterTagValidator implements IMasterTagValidator{
 	}
 	
 	
-	
+
+	public void checkEXTXSTREAMINF(List<String> dataFileArray) {
+		List<Map<String,String>> maps = new ArrayList<Map<String, String>>();
+		for (String dataItem : dataFileArray){			
+			if(dataItem.matches(Constants.streamRegex)){
+				int index = dataFileArray.indexOf(dataItem);
+				int uriIndex = index + 1;
+				System.out.println("Line number:" + index + "--" + dataItem);
+				System.out.println("Line number:" + uriIndex + "--" + dataFileArray.get(uriIndex));
+				/*Map<String, String> myMap1 = new HashMap<String, String>();
+		        myMap1.put(dataItem, dataFileArray.get(dataFileArray.indexOf(dataItem) + 1));
+				maps.add(myMap1);*/				
+			}
+		}
+		
+		
+	}
+
 	
 	
 	
@@ -53,3 +81,6 @@ public class MasterTagValidator implements IMasterTagValidator{
 	}
 
 }
+
+
+
