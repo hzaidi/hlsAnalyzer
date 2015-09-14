@@ -30,13 +30,13 @@ public class App
 		if(scannedFile != null){		    
 			while(scannedFile.hasNextLine()) {
 				 String line = scannedFile.nextLine();
-				 dataFileArray.add(line);
-	        }
-			System.out.println("Data Array: " + dataFileArray.toString());
-			MasterValidator masterValidator =new MasterValidator(dataFileArray);
-			if(!masterValidator.isValid()){
-				System.out.println("Test");
-			}
+				 dataFileArray.add(line.trim());
+	        }			
+			BasicValidator basicValidator =new BasicValidator(dataFileArray);
+			basicValidator.doValidation();
+			MasterPlaylistValidator masterValidator = new MasterPlaylistValidator(dataFileArray);
+			masterValidator.doValidation();
+			
 		}else{
 			LogWriter.log("Terminating the program.");
 		}	

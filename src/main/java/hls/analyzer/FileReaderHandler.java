@@ -9,7 +9,6 @@ import java.util.Scanner;
 public class FileReaderHandler implements IFileReaderHandler {
 	
 	String _filePath;
-	String _urlRegex = "^(ftp|http|https)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
 			
 	FileReaderHandler (String filePath){
 		_filePath = filePath;
@@ -18,7 +17,7 @@ public class FileReaderHandler implements IFileReaderHandler {
 	public Scanner getScannerStream() throws IOException{		
 		if(verifyFileExtension()){			
 	    	Scanner br = null;
-	    	if(isUrl()){
+	    	if(UtilHelper.isUrl(_filePath)){
 	    		URL url = new URL(_filePath);    		
 	    		br = new Scanner(url.openStream());    		
 	    	}else{
@@ -30,7 +29,7 @@ public class FileReaderHandler implements IFileReaderHandler {
 	}
 
 	public String baseUrl(){		
-		if(isUrl()){
+		if(UtilHelper.isUrl(_filePath)){
 			int i = _filePath.lastIndexOf('/');
 			return _filePath.substring(0, i + 1);
 		}
@@ -38,11 +37,7 @@ public class FileReaderHandler implements IFileReaderHandler {
 		
 	}	
 	
-	private boolean isUrl(){
-		return _filePath.matches(_urlRegex);
-	}	
-	
-	private boolean verifyFileExtension() throws IOException{
+		private boolean verifyFileExtension() throws IOException{
 		String extension = "";
     	int i = _filePath.lastIndexOf('.');
     	if (i > 0) {
