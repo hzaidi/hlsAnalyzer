@@ -35,10 +35,7 @@ public class App
 			BasicValidator basicValidator =new BasicValidator(dataFileArray);
 			basicValidator.doValidation();
 			MasterPlaylistValidator masterValidator = new MasterPlaylistValidator(dataFileArray);
-			masterValidator.doValidation();
-			
-		}else{
-			LogWriter.log("Terminating the program.");
+			masterValidator.doValidation();			
 		}	
     }
 }

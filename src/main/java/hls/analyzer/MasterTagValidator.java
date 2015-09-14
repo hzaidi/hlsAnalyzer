@@ -38,11 +38,11 @@ public class MasterTagValidator implements IMasterTagValidator{
 					LogWriter.log("Group id is required and its missing from the menifest file.");
 				}
 				
-				
+				//-----------------------------------------------------------------
 				//TODO More attributes can be verified here in future
 				// e.g. Language, Accoc-Language, Name, Default, Autoselect, Forced
 				// instream-id, characterstics.
-						
+				//-----------------------------------------------------------------		
 			}
 		}
 				
