@@ -19,8 +19,9 @@ public class Constants {
 	public static final String EXTXSTREAMINF = "#EXT-X-STREAM-INF";
 	
 	//Regular Expression to validate tags
-	public static final String mediaRegex = "^" + EXTXMEDIA + ":.*";	
-	public static final String streamRegex = "^" + EXTXSTREAMINF + ":.*";
+	public static final String versionRegex = "^" + EXTXVERSION + ":(.*)";
+	public static final String mediaRegex = "^" + EXTXMEDIA + ":(.*)";	
+	public static final String streamRegex = "^" + EXTXSTREAMINF + ":(.*)";
 	public static final String typeRegex = "(TYPE=(AUDIO|VIDEO|SUBTITLES|CLOSED-CAPTION))";
 	public static final String uriRegex = "(URI=\""+ urlRegex +"\")";
 	public static final String groupRegex = "(GROUP-ID=\"(.*)\")";

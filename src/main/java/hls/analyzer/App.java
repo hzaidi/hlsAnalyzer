@@ -16,6 +16,7 @@ public class App
     	System.out.println("Please enter the Url or the Physical Location of file" );    	
     	Scanner inputReader = new Scanner(System.in);
     	List<String> dataFileArray = new ArrayList<String>();
+    	
     	String baseUrl = "";
     	final String filePath = inputReader.nextLine();
     	inputReader.close();    	    	
@@ -31,11 +32,16 @@ public class App
 			while(scannedFile.hasNextLine()) {
 				 String line = scannedFile.nextLine();
 				 dataFileArray.add(line.trim());
-	        }			
-			BasicValidator basicValidator =new BasicValidator(dataFileArray);
-			basicValidator.doValidation();
-			MasterPlaylistValidator masterValidator = new MasterPlaylistValidator(dataFileArray);
-			masterValidator.doValidation();			
-		}	
+	        }
+			List<Validator> validations = new ArrayList<Validator>();
+			validations.add(new EXTM3U(dataFileArray));
+			validations.add(new EXTXVERSION(dataFileArray));
+			validations.add(new EXTXMEDIA(dataFileArray));
+			validations.add(new EXTXSTREAMINF(dataFileArray));
+			
+			for (Validator validator : validations) {
+				validator.isValid();
+			}
+		}
     }
 }
