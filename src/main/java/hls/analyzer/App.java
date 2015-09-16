@@ -18,23 +18,27 @@ public class App
     	inputReader.close();    	    	
     	FileReaderHandler fh = new FileReaderHandler(filePath);    	
 		String baseUrl = fh.baseUrl();
-		if(!baseUrl.isEmpty()){
-			System.out.println("Base Url:" + fh.baseUrl());
-		}
+		String fileName = fh.fileName();
+		
 		dataFileArray = fh.getFileAsArray();
 		if(dataFileArray != null){		    
 			List<Validator> validations = new ArrayList<Validator>();
-			validations.add(new EXTM3U(dataFileArray));
-			validations.add(new EXTXVERSION(dataFileArray));
-			validations.add(new EXTXMEDIA(dataFileArray));
-			validations.add(new EXTXSTREAMINF(baseUrl,dataFileArray));
+			validations.add(new EXTM3U(dataFileArray,fileName));
+			validations.add(new EXTXVERSION(dataFileArray,fileName));
+			validations.add(new EXTXMEDIA(dataFileArray,fileName));
+			validations.add(new EXTXSTREAMINF(baseUrl,dataFileArray,fileName));
 			
 			for (Validator validator : validations) {
 				reports.addAll(validator.isValid());
 			}
 			
 			for (ValidationReport report : reports) {
-				System.out.println("Line#" + report.LineNumber + "-Tag:" + report.ErrorTag + "-File:" + report.FileName +"-Details:" + report.Detail);
+				System.out.println("-----------------------------------------------");
+				System.out.println("Line:		" + report.LineNumber);
+				System.out.println("Tag:		" + report.ErrorTag);
+				System.out.println("File:		" + report.FileName );
+				System.out.println("Details:	" + report.Detail);
+				System.out.println("-----------------------------------------------");				
 			}
 			
 		}else{

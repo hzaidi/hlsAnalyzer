@@ -10,7 +10,9 @@ import java.util.Map.Entry;
 public class EXTXSTREAMINF extends Validator{
 	private List<String> _dataFileArray;
 	private String _baseUrl;
-	EXTXSTREAMINF(String baseUrl,List<String> dataFileArray){
+	private String _fileName;
+	EXTXSTREAMINF(String baseUrl,List<String> dataFileArray, String fileName){
+		_fileName = fileName;
 		_baseUrl = baseUrl;
 		_dataFileArray = dataFileArray;
 	}
@@ -32,7 +34,7 @@ public class EXTXSTREAMINF extends Validator{
 			//Validating the BANDWIDTH attribute
 			String bandWidthStr = UtilHelper.parseStringAttr(tagLine, Constants.bandwidthRegex);
 			if(bandWidthStr == null){
-				errorMsgs.add(new ValidationReport(entry.LineNumber,Constants.EXTXSTREAMINF,"","BANDWIDTH attribute is required."));
+				errorMsgs.add(new ValidationReport(entry.LineNumber,Constants.EXTXSTREAMINF,_fileName,"BANDWIDTH attribute is required."));
 			}else{
 				int bandWidth= Integer.parseInt(bandWidthStr);
 			}
@@ -43,19 +45,25 @@ public class EXTXSTREAMINF extends Validator{
 			// VIDEO, SUBTITLES, CLOSED-CAPTIONS
 			//-----------------------------------------------------------------	
 			
-			
-			String fullUri = _baseUrl + entry.Uri;
+			String fileName = entry.Uri;
+			String fullUri = _baseUrl + fileName;
 			if(!fullUri.matches(Constants.extensionRegex)){
-				errorMsgs.add(new ValidationReport(entry.LineNumber + 1,Constants.EXTXSTREAMINF,"","Extension of the Uri file is invalid"));
+				errorMsgs.add(new ValidationReport(entry.LineNumber + 1,Constants.EXTXSTREAMINF,_fileName,"Extension of the Uri file is invalid"));
 				continue;
 			}			
 			if(!UtilHelper.exists(fullUri)){
-				errorMsgs.add(new ValidationReport(entry.LineNumber + 1,Constants.EXTXSTREAMINF,"","File " + entry.Uri + " mentioned in the menifest file doest not exist on the server."));
+				errorMsgs.add(new ValidationReport(entry.LineNumber + 1,Constants.EXTXSTREAMINF,_fileName,"File " + entry.Uri + " mentioned in the menifest file doest not exist on the server."));
 			}else{
 				FileReaderHandler fh = new FileReaderHandler(fullUri);
 				List<String> subdataFileArray = new ArrayList<String>();
 				subdataFileArray = fh.getFileAsArray();
 				if(subdataFileArray != null){		    
+					List<Validator> validations = new ArrayList<Validator>();
+					validations.add(new EXTM3U(subdataFileArray,fileName));
+					validations.add(new EXTXVERSION(subdataFileArray,fileName));
+					for (Validator validator : validations) {
+						errorMsgs.addAll(validator.isValid());
+					}
 					
 				}
 			}

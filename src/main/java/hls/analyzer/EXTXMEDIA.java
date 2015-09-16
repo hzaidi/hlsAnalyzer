@@ -5,7 +5,9 @@ import java.util.List;
 
 public class EXTXMEDIA  extends Validator{
 	private List<String> _dataFileArray;
-	EXTXMEDIA(List<String> dataFileArray){
+	private String _fileName;
+	EXTXMEDIA(List<String> dataFileArray,String fileName){
+		_fileName = fileName;
 		_dataFileArray = dataFileArray;
 	}
 	@Override
@@ -18,21 +20,21 @@ public class EXTXMEDIA  extends Validator{
 				//Validating the Media type attribute
 				//Media type attribute should be (AUDIO,VEDIO,SUBTITLES or CLOSED-CAPTION)
 				if(type == null || !Constants.ValidTypes.contains(type)){
-					errorMsgs.add(new ValidationReport(lineNumber,Constants.EXTXMEDIA,"","Invalid media type attribute is detected."));
+					errorMsgs.add(new ValidationReport(lineNumber,Constants.EXTXMEDIA,_fileName,"Invalid media type attribute is detected."));
 				}
 				//Validating the URI attribute
 				//if the Media type attribute is "CLOSED-CAPTION" URI Attribute should not be present.
 				String uri = UtilHelper.parseStringAttr(dataItem, Constants.uriRegex);
 				if(uri != null && type != null && type.equals("CLOSED-CAPTION") && !uri.isEmpty()){
-					errorMsgs.add(new ValidationReport(lineNumber,Constants.EXTXMEDIA,"","If the media type is 'CLOSED-CAPTION' URI attribute should not be present."));
+					errorMsgs.add(new ValidationReport(lineNumber,Constants.EXTXMEDIA,_fileName,"If the media type is 'CLOSED-CAPTION' URI attribute should not be present."));
 				}else{
 					if(uri != null && !UtilHelper.isUrl(uri)){
-						errorMsgs.add(new ValidationReport(lineNumber,Constants.EXTXMEDIA,"","Uri path is invalid."));
+						errorMsgs.add(new ValidationReport(lineNumber,Constants.EXTXMEDIA,_fileName,"Uri path is invalid."));
 					}
 				}
 				String groupId = UtilHelper.parseStringAttr(dataItem, Constants.groupRegex);
 				if(groupId == null){
-					errorMsgs.add(new ValidationReport(lineNumber,Constants.EXTXMEDIA,"","Group id is required and its missing from the menifest file."));
+					errorMsgs.add(new ValidationReport(lineNumber,Constants.EXTXMEDIA,_fileName,"Group id is required and its missing from the menifest file."));
 				}
 				
 				//-----------------------------------------------------------------

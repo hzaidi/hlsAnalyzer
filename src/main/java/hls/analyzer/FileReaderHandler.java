@@ -7,6 +7,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import org.apache.commons.io.FilenameUtils;
+
+
 
 public class FileReaderHandler implements IFileReaderHandler {
 	
@@ -48,15 +51,21 @@ public class FileReaderHandler implements IFileReaderHandler {
 	}
 
 	public String baseUrl(){		
-		if(UtilHelper.isUrl(_filePath)){
-			int i = _filePath.lastIndexOf('/');
-			return _filePath.substring(0, i + 1);
+		if(UtilHelper.isUrl(_filePath)){			
+			return FilenameUtils.getFullPath(_filePath);
 		}
 		return "";
 		
 	}	
 	
-	private boolean verifyFileExtension() throws IOException{
+	public String fileName(){
+		if(UtilHelper.isUrl(_filePath)){
+			return FilenameUtils.getName(_filePath);
+		}
+		return "";
+	}
+	
+	private boolean verifyFileExtension() throws IOException{				
 		if(_filePath.matches(Constants.extensionRegex)){
 			return true;
     	}   

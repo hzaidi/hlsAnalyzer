@@ -6,7 +6,9 @@ import java.util.List;
 public class EXTXVERSION extends Validator{
 	
 	private List<String> _dataFileArray;
-	EXTXVERSION(List<String> dataFileArray){
+	private String _fileName;
+	EXTXVERSION(List<String> dataFileArray, String fileName){
+		_fileName = fileName;
 		_dataFileArray = dataFileArray;
 	}
 	
@@ -22,10 +24,10 @@ public class EXTXVERSION extends Validator{
 					if(versionId.matches(Constants.intRegex)){
 						version =  Integer.parseInt(UtilHelper.parseStringAttr(dataItem, Constants.versionRegex));
 					}else{
-						errorMsgs.add(new ValidationReport(lineNumber,Constants.versionRegex,"","Version number should be an integer"));
+						errorMsgs.add(new ValidationReport(lineNumber,Constants.EXTXVERSION,_fileName,"Version number should be an integer"));
 					}
 				}else{
-					errorMsgs.add(new ValidationReport(lineNumber,Constants.versionRegex,"","Invalid file because multiple EXT-X-VERSION tag detected."));
+					errorMsgs.add(new ValidationReport(lineNumber,Constants.EXTXVERSION,_fileName,"Invalid file because multiple EXT-X-VERSION tag detected."));
 					break;
 				}				
 			}
