@@ -53,9 +53,9 @@ public class EXTXSTREAMINF extends Validator{
 				errorMsgs.add(new ValidationReport(entry.LineNumber + 1,Constants.EXTXSTREAMINF,"","File " + entry.Uri + " mentioned in the menifest file doest not exist on the server."));
 			}else{
 				FileReaderHandler fh = new FileReaderHandler(fullUri);
-		    	Scanner scannedFile;
-				scannedFile = fh.getScannerStream();
-				if(scannedFile != null){
+				List<String> subdataFileArray = new ArrayList<String>();
+				subdataFileArray = fh.getFileAsArray();
+				if(subdataFileArray != null){		    
 					
 				}
 			}
