@@ -8,9 +8,11 @@ public class Constants {
 
 	//Regular expression to validate URL	
 	public static final String urlRegex = "((?:ftp|http|https)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|])";
+	public static final String intRegex = "(^\\d+$)";
+	public static final String extensionRegex = "(^.*\\.(m3u8|m3u)$)";
 		
 	// Valid Media tag Values
-	public static final List<String> ValidTypes = Arrays.asList("AUDIO","VIDEO","SUBTITLES","CLOSED-CAPTIONS");
+	public static final List<String> ValidTypes = Arrays.asList("AUDIO","VIDEO","SUBTITLES","CLOSED-CAPTION");
 		
 	// Tags
 	public static final String EXTXMEDIA = "#EXT-X-MEDIA";
@@ -25,7 +27,7 @@ public class Constants {
 	public static final String typeRegex = "(TYPE=(AUDIO|VIDEO|SUBTITLES|CLOSED-CAPTION))";
 	public static final String uriRegex = "(URI=\""+ urlRegex +"\")";
 	public static final String groupRegex = "(GROUP-ID=\"(.*)\")";
-	
+	public static final String bandwidthRegex = "(BANDWIDTH=(\\d+$))";
 	
 		
 }

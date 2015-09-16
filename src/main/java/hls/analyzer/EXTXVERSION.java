@@ -18,7 +18,12 @@ public class EXTXVERSION extends Validator{
 			int lineNumber = _dataFileArray.indexOf(dataItem);
 			if(!dataItem.isEmpty() && dataItem.matches(Constants.versionRegex)){
 				if(version < 0){
-					version =  Integer.parseInt(UtilHelper.parseStringAttr(dataItem, Constants.versionRegex));
+					String versionId = UtilHelper.parseStringAttr(dataItem, Constants.versionRegex);
+					if(versionId.matches(Constants.intRegex)){
+						version =  Integer.parseInt(UtilHelper.parseStringAttr(dataItem, Constants.versionRegex));
+					}else{
+						errorMsgs.add(new ValidationReport(lineNumber,Constants.versionRegex,"","Version number should be an integer"));
+					}
 				}else{
 					errorMsgs.add(new ValidationReport(lineNumber,Constants.versionRegex,"","Invalid file because multiple EXT-X-VERSION tag detected."));
 					break;

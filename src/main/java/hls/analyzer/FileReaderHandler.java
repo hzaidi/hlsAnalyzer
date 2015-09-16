@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class FileReaderHandler implements IFileReaderHandler {
@@ -13,13 +15,30 @@ public class FileReaderHandler implements IFileReaderHandler {
 	FileReaderHandler (String filePath){
 		_filePath = filePath;
 	}
+	
+	public List<String> getFileAsArray()  throws IOException{
+		List<String> dataFileArray = new ArrayList<String>();
+		Scanner scannedFile = getScannerStream();
+		if(scannedFile == null){
+			return null;
+		}
+		while(scannedFile.hasNextLine()) {
+			 String line = scannedFile.nextLine();
+			 dataFileArray.add(line.trim());
+       }
+		return dataFileArray;
+	}
 		
 	public Scanner getScannerStream() throws IOException{		
 		if(verifyFileExtension()){			
 	    	Scanner br = null;
 	    	if(UtilHelper.isUrl(_filePath)){
-	    		URL url = new URL(_filePath);    		
-	    		br = new Scanner(url.openStream());    		
+	    		if(UtilHelper.exists(_filePath)){
+		    		URL url = new URL(_filePath);    		
+		    		br = new Scanner(url.openStream());
+	    		}else{
+	    			return null;
+	    		}
 	    	}else{
 	    		br = new Scanner(new BufferedReader(new FileReader(_filePath)));
 	    	}
@@ -37,16 +56,10 @@ public class FileReaderHandler implements IFileReaderHandler {
 		
 	}	
 	
-		private boolean verifyFileExtension() throws IOException{
-		String extension = "";
-    	int i = _filePath.lastIndexOf('.');
-    	if (i > 0) {
-    		extension = _filePath.substring(i+1);
-    	}
-    	if(extension.equals("m3u8") || extension.equals("m3u")){
-    		return true;
-    	}    	
-    	LogWriter.log("Invalid file Extension to read.");    	
-    	return false;
+	private boolean verifyFileExtension() throws IOException{
+		if(_filePath.matches(Constants.extensionRegex)){
+			return true;
+    	}   
+		return false;
 	} 
 }
