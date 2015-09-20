@@ -15,7 +15,7 @@ public class EXTXMEDIA  extends Validator{
 		List<ValidationReport> errorMsgs = new ArrayList<ValidationReport>(); 
 		for (String dataItem : _dataFileArray) {
 			int lineNumber = _dataFileArray.indexOf(dataItem);
-			if(dataItem.matches(Constants.mediaRegex)){
+			if(UtilHelper.match(dataItem,Constants.mediaRegex)){
 				String type = UtilHelper.parseStringAttr(dataItem,Constants.typeRegex);
 				//Validating the Media type attribute
 				//Media type attribute should be (AUDIO,VEDIO,SUBTITLES or CLOSED-CAPTION)

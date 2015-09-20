@@ -1,12 +1,12 @@
 package hls.analyzer;
 
 public class ValidationReport {
-	public int LineNumber;
+	public Integer LineNumber;
 	public String ErrorTag;
 	public String FileName;
 	public String Detail;
 	
-	ValidationReport(int lineNumber, String errorTag, String fileName, String detail){
+	ValidationReport(Integer lineNumber, String errorTag, String fileName, String detail){
 		LineNumber = lineNumber;
 		ErrorTag = errorTag;
 		FileName = fileName;

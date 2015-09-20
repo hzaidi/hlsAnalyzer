@@ -11,6 +11,11 @@ public class UtilHelper {
 		return url.matches("^" + Constants.urlRegex);
 	}
 	
+	public static boolean match(String line, String regex){
+		Pattern pattern = Pattern.compile(regex,Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(line);
+		return matcher.find();
+	}
 
 	public static String parseStringAttr(String line, String regex){
 		Pattern pattern = Pattern.compile(regex,Pattern.CASE_INSENSITIVE);
@@ -21,7 +26,7 @@ public class UtilHelper {
 		}
 		return null;
 	}
-		
+	
 	public static boolean exists(String URLName){
 	    try {
 	      HttpURLConnection.setFollowRedirects(false);

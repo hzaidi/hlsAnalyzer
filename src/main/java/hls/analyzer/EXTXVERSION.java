@@ -18,10 +18,10 @@ public class EXTXVERSION extends Validator{
 		int version = -1;
 		for (String dataItem : _dataFileArray) {
 			int lineNumber = _dataFileArray.indexOf(dataItem);
-			if(!dataItem.isEmpty() && dataItem.matches(Constants.versionRegex)){
+			if(!dataItem.isEmpty() && UtilHelper.match(dataItem,Constants.versionRegex)){
 				if(version < 0){
 					String versionId = UtilHelper.parseStringAttr(dataItem, Constants.versionRegex);
-					if(versionId.matches(Constants.intRegex)){
+					if(UtilHelper.match(versionId,Constants.intRegex)){
 						version =  Integer.parseInt(UtilHelper.parseStringAttr(dataItem, Constants.versionRegex));
 					}else{
 						errorMsgs.add(new ValidationReport(lineNumber,Constants.EXTXVERSION,_fileName,"Version number should be an integer"));
@@ -32,6 +32,10 @@ public class EXTXVERSION extends Validator{
 				}				
 			}
 		}
+		if(version < 0){
+			errorMsgs.add(new ValidationReport(null,Constants.EXTXVERSION,_fileName,"EXT-X-VERSION tag not detected which make this file invalid."));
+		}
+		
 		// TODO https://datatracker.ietf.org/doc/draft-pantos-http-live-streaming/?include_text=1
 		// TODO version check discussed in the section 7
 		return errorMsgs;

@@ -21,7 +21,7 @@ public class EXTXSTREAMINF extends Validator{
 		List<ValidationReport> errorMsgs = new ArrayList<ValidationReport>(); 
 		List<StreamUriContainer> pairList = new ArrayList<StreamUriContainer>();
 		for (String dataItem : _dataFileArray){			
-			if(dataItem.matches(Constants.streamRegex)){
+			if(UtilHelper.match(dataItem,Constants.streamRegex)){
 				int index = _dataFileArray.indexOf(dataItem);
 				int uriIndex = index + 1;
 				pairList.add(new StreamUriContainer(index,dataItem,_dataFileArray.get(uriIndex)));
@@ -58,13 +58,8 @@ public class EXTXSTREAMINF extends Validator{
 				List<String> subdataFileArray = new ArrayList<String>();
 				subdataFileArray = fh.getFileAsArray();
 				if(subdataFileArray != null){		    
-					List<Validator> validations = new ArrayList<Validator>();
-					validations.add(new EXTM3U(subdataFileArray,fileName));
-					validations.add(new EXTXVERSION(subdataFileArray,fileName));
-					for (Validator validator : validations) {
-						errorMsgs.addAll(validator.isValid());
-					}
-					
+					MediaPlaylist mediaPlaylist = new MediaPlaylist(fileName,subdataFileArray);
+					errorMsgs.addAll(mediaPlaylist.parse());
 				}
 			}
 			

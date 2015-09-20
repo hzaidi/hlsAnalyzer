@@ -59,10 +59,7 @@ public class FileReaderHandler implements IFileReaderHandler {
 	}	
 	
 	public String fileName(){
-		if(UtilHelper.isUrl(_filePath)){
-			return FilenameUtils.getName(_filePath);
-		}
-		return "";
+		return FilenameUtils.getName(_filePath);
 	}
 	
 	private boolean verifyFileExtension() throws IOException{				
