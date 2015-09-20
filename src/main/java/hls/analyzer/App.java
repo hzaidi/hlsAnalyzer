@@ -10,18 +10,11 @@ public class App
 {
     public static void main( String[] args ) throws IOException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException
     {    	    	
-//    	System.out.println("data item matches:" + "#EXTINF:6, no desc".matches("^#EXTINF:(\\d+),.*"));
-//    	
-//    	System.out.println("data item matches:" + "#EXTINF:6".matches("^#EXTINF:(\\d+)(?,.*)"));
-//    	
     	System.out.println("Please enter the Url or the Physical Location of file" );    	
     	Scanner inputReader = new Scanner(System.in);
     	List<String> dataFileArray = new ArrayList<String>();
     	List<ValidationReport> reports = new ArrayList<ValidationReport>();
     	final String filePath = inputReader.nextLine();
-    	
-    	
-    	
     	inputReader.close();    	    	
     	FileReaderHandler fh = new FileReaderHandler(filePath);    	
 		String baseUrl = fh.baseUrl();
