@@ -24,16 +24,7 @@ public class App
 		if(dataFileArray != null){	
 			MasterPlaylist masterPlayList = new MasterPlaylist(fileName, baseUrl, dataFileArray);
 			reports.addAll(masterPlayList.parse());
-			
-			for (ValidationReport report : reports) {
-				System.out.println("-----------------------------------------------");
-				System.out.println("Line:		" + report.LineNumber);
-				System.out.println("Tag:		" + report.ErrorTag);
-				System.out.println("File:		" + report.FileName );
-				System.out.println("Details:	" + report.Detail);
-				System.out.println("-----------------------------------------------");				
-			}
-			
+			new LogWriter(fileName,reports).Createlog();
 		}else{
 			System.out.println("Unable to read content from the file specified.");
 		}

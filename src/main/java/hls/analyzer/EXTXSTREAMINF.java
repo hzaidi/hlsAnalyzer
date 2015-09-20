@@ -47,7 +47,7 @@ public class EXTXSTREAMINF extends Validator{
 			
 			String fileName = entry.Uri;
 			String fullUri = _baseUrl + fileName;
-			if(!fullUri.matches(Constants.extensionRegex)){
+			if(!UtilHelper.match(fullUri,Constants.extensionRegex)){
 				errorMsgs.add(new ValidationReport(entry.LineNumber + 1,Constants.EXTXSTREAMINF,_fileName,"Extension of the Uri file is invalid"));
 				continue;
 			}			

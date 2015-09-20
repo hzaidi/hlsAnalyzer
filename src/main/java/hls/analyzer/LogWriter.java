@@ -1,29 +1,66 @@
 package hls.analyzer;
-import java.io.*;
+
+import org.apache.commons.io.FilenameUtils;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.*;
 
 public class LogWriter {
-	String _fileName = "";
-	String _filePostFix = ".log";
-	protected static final Logger logger=Logger.getLogger("MYLOG");
-	FileHandler file = null; 
-
-	LogWriter(String fileName)  throws IOException{
-		_fileName = fileName;
-        try {
-        	if(file == null){
-	            file= new FileHandler(_fileName + _filePostFix);        	
-	            logger.addHandler(file);
-	            SimpleFormatter formatter = new SimpleFormatter();  
-	            file.setFormatter(formatter);  
-	            logger.setUseParentHandlers(false);
-        	}
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+	
+	private static final String _filePath = "C:/Users/hzaidi/M3U8ParserLogs/";	
+	private static String _fileName = "";
+	private static final String _filePostFix = "log";
+	private List<ValidationReport> _errorMessages;
+	
+	LogWriter(String fileName,List<ValidationReport> errorMessages)  throws IOException{
+		_fileName = fileName;      
+		_errorMessages = errorMessages;
 	}
-	public static void log(String logEntry){
-		logger.info(logEntry);
+	public void Createlog(){
+		if(_errorMessages.size() > 0){
+			Workbook workbook = new XSSFWorkbook();
+	        Sheet studentsSheet = workbook.createSheet(FilenameUtils.removeExtension(_fileName) + _filePostFix);	       
+	        int rowIndex = 0;
+	        Row row = studentsSheet.createRow(rowIndex++);
+	        int cellIndex = 0;
+            row.createCell(cellIndex++).setCellValue("Line Number");
+            row.createCell(cellIndex++).setCellValue("Tag");
+            row.createCell(cellIndex++).setCellValue("File");
+            row.createCell(cellIndex++).setCellValue("Details");
+	        for(ValidationReport errorMessage : _errorMessages){
+	            row = studentsSheet.createRow(rowIndex++);
+	            cellIndex = 0;
+
+	            row.createCell(cellIndex++).setCellValue(errorMessage.LineNumber);
+
+	            row.createCell(cellIndex++).setCellValue(errorMessage.ErrorTag);
+
+	            row.createCell(cellIndex++).setCellValue(errorMessage.FileName);
+
+	            row.createCell(cellIndex++).setCellValue(errorMessage.Detail);
+
+	        }
+	        try {
+	        	String fullFilePathAndName = _filePath + FilenameUtils.removeExtension(_fileName) + ".xlsx";
+	            FileOutputStream fos = new FileOutputStream(fullFilePathAndName);
+	            workbook.write(fos);
+	            fos.close();	            
+	        } catch (FileNotFoundException e) {
+	            e.printStackTrace();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+
+
+		}
 	}
 	
 }
