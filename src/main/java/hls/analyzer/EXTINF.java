@@ -7,8 +7,8 @@ import java.util.List;
 public class EXTINF extends Validator{
 	private List<String> _dataFileArray;
 	private String _fileName;
-	private int _duration;
-	EXTINF(List<String> dataFileArray,String fileName, int duration){
+	private Float _duration;
+	EXTINF(List<String> dataFileArray,String fileName, Float duration){
 		_fileName = fileName;
 		_dataFileArray = dataFileArray;
 		_duration = duration;

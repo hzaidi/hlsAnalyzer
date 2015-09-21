@@ -15,7 +15,8 @@ import java.util.logging.*;
 
 public class LogWriter {
 	
-	private static final String _filePath = "C:/Users/hzaidi/M3U8ParserLogs/";	
+	//private static final String _filePath = "C:/Users/hzaidi/M3U8ParserLogs/";	
+	private static final String _filePath = "V:/M3U8ParserLogs";
 	private static String _fileName = "";
 	private static final String _filePostFix = "log";
 	private List<ValidationReport> _errorMessages;
@@ -37,9 +38,14 @@ public class LogWriter {
             row.createCell(cellIndex++).setCellValue("Details");
 	        for(ValidationReport errorMessage : _errorMessages){
 	            row = studentsSheet.createRow(rowIndex++);
-	            cellIndex = 0;
-
-	            row.createCell(cellIndex++).setCellValue(errorMessage.LineNumber);
+	            cellIndex = 0;	            
+	            String lineNumber = "";
+	            if(errorMessage.LineNumber == null){
+	            	lineNumber = "";
+	            }else{
+	            	lineNumber = errorMessage.LineNumber.toString();
+	            }
+	            row.createCell(cellIndex++).setCellValue(lineNumber);
 
 	            row.createCell(cellIndex++).setCellValue(errorMessage.ErrorTag);
 

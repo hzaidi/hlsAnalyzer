@@ -27,7 +27,9 @@ public class FileReaderHandler implements IFileReaderHandler {
 		}
 		while(scannedFile.hasNextLine()) {
 			 String line = scannedFile.nextLine();
-			 dataFileArray.add(line.trim());
+			 if(!line.isEmpty()){
+				 dataFileArray.add(line.trim());
+			 }
        }
 		return dataFileArray;
 	}
