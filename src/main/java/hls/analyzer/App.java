@@ -27,7 +27,7 @@ public class App
 			//new LogWriter(fileName,reports).Createlog();
 			for (ValidationReport validationReport : reports) {
 				System.out.println("-----------------------------------------------------");
-				System.out.println("Line Number:" + validationReport.LineNumber);
+				System.out.println("Line Number:" + (validationReport.LineNumber == null ? "" : validationReport.LineNumber));
 				System.out.println("Tag:" + validationReport.ErrorTag);
 				System.out.println("File:" + validationReport.FileName);
 				System.out.println("Details:" + validationReport.Detail);
