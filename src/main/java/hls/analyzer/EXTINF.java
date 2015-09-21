@@ -19,18 +19,20 @@ public class EXTINF extends Validator{
 		float duration = -1;
 		for (String dataItem : _dataFileArray) {
 			int lineNumber = _dataFileArray.indexOf(dataItem);
-			if(!dataItem.isEmpty() && UtilHelper.match(dataItem,Constants.extInfDurationRegex)){
-				if(duration < 0){
-					String durationValue = UtilHelper.parseStringAttr(dataItem, Constants.extInfDurationRegex);					
-					if(UtilHelper.match(durationValue,Constants.intRegex)){
-						duration =  Float.parseFloat(UtilHelper.parseStringAttr(dataItem, Constants.extInfDurationRegex));
-						if(duration > _duration){
-							errorMsgs.add(new ValidationReport(lineNumber,Constants.EXTINF,_fileName,"EXTINF duration value should not be greater then EXT-X-TARGETDURATION tag duration value."));
-						}
-					}else{
-						errorMsgs.add(new ValidationReport(lineNumber,Constants.EXTINF,_fileName,"EXTINF duration number should be an integer or float"));
+			if(!dataItem.isEmpty() && UtilHelper.match(dataItem,Constants.extInfDurationRegex)){				
+				String durationValue = UtilHelper.parseStringAttr(dataItem, Constants.extInfDurationRegex);					
+				if(UtilHelper.match(durationValue,Constants.intRegex)){
+					duration =  Float.parseFloat(UtilHelper.parseStringAttr(dataItem, Constants.extInfDurationRegex));
+					//System.out.println("File: " + _fileName);
+					//System.out.println("duration" + duration);
+					//System.out.println("_duration" + _duration);
+					if(duration > _duration){
+						errorMsgs.add(new ValidationReport(lineNumber,Constants.EXTINF,_fileName,"EXTINF duration value should not be greater then EXT-X-TARGETDURATION tag duration value."));
 					}
+				}else{
+					errorMsgs.add(new ValidationReport(lineNumber,Constants.EXTINF,_fileName,"EXTINF duration number should be an integer or float"));
 				}
+				
 			}	
 		}
 		return errorMsgs;
