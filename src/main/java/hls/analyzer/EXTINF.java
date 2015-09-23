@@ -18,7 +18,7 @@ public class EXTINF extends Validator{
 		List<ValidationReport> errorMsgs = new ArrayList<ValidationReport>();
 		float duration = -1;
 		for (String dataItem : _dataFileArray) {
-			int lineNumber = _dataFileArray.indexOf(dataItem);
+			int lineNumber = _dataFileArray.indexOf(dataItem) + 1;
 			if(!dataItem.isEmpty() && UtilHelper.match(dataItem,Constants.extInfDurationRegex)){				
 				String durationValue = UtilHelper.parseStringAttr(dataItem, Constants.extInfDurationRegex);					
 				if(UtilHelper.match(durationValue,Constants.intRegex)){

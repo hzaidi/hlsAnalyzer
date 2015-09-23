@@ -25,7 +25,7 @@ public class App
 			System.out.println("Parsing in Progress.");
 			MasterPlaylist masterPlayList = new MasterPlaylist(fileName, baseUrl, dataFileArray);
 			reports.addAll(masterPlayList.parse());
-			System.out.println("Finish Parsing.");
+			System.out.println("Finish Parsing.");			
 			new LogWriter(fileName,reports).Createlog();
 			/*for (ValidationReport validationReport : reports) {
 				System.out.println("-----------------------------------------------------");

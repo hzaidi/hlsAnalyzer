@@ -17,7 +17,7 @@ public class EXTXVERSION extends Validator{
 		List<ValidationReport> errorMsgs = new ArrayList<ValidationReport>(); 
 		int version = -1;
 		for (String dataItem : _dataFileArray) {
-			int lineNumber = _dataFileArray.indexOf(dataItem);
+			int lineNumber = _dataFileArray.indexOf(dataItem) + 1;
 			if(!dataItem.isEmpty() && UtilHelper.match(dataItem,Constants.versionRegex)){
 				if(version < 0){
 					String versionId = UtilHelper.parseStringAttr(dataItem, Constants.versionRegex);

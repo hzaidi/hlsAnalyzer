@@ -24,7 +24,7 @@ public class EXTXSTREAMINF extends Validator{
 			if(UtilHelper.match(dataItem,Constants.streamRegex)){
 				int index = _dataFileArray.indexOf(dataItem);
 				int uriIndex = index + 1;
-				pairList.add(new StreamUriContainer(index,dataItem,_dataFileArray.get(uriIndex)));
+				pairList.add(new StreamUriContainer(index + 1,dataItem,_dataFileArray.get(uriIndex)));
 			}
 		}
 		

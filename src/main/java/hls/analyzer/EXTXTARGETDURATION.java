@@ -16,7 +16,7 @@ public class EXTXTARGETDURATION extends Validator{
 		List<ValidationReport> errorMsgs = new ArrayList<ValidationReport>(); 
 		Float duration = (float) -1;
 		for (String dataItem : _dataFileArray) {
-			int lineNumber = _dataFileArray.indexOf(dataItem);
+			int lineNumber = _dataFileArray.indexOf(dataItem) + 1;
 			if(!dataItem.isEmpty() && dataItem.matches(Constants.durationRegex)){
 				if(duration < 0){
 					String durationValue = UtilHelper.parseStringAttr(dataItem, Constants.durationRegex);

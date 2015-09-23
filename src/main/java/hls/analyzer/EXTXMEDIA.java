@@ -14,7 +14,7 @@ public class EXTXMEDIA  extends Validator{
 	public List<ValidationReport> isValid() {
 		List<ValidationReport> errorMsgs = new ArrayList<ValidationReport>(); 
 		for (String dataItem : _dataFileArray) {
-			int lineNumber = _dataFileArray.indexOf(dataItem);
+			int lineNumber = _dataFileArray.indexOf(dataItem) + 1;
 			if(UtilHelper.match(dataItem,Constants.mediaRegex)){
 				String type = UtilHelper.parseStringAttr(dataItem,Constants.typeRegex);
 				//Validating the Media type attribute
