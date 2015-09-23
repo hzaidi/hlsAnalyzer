@@ -60,6 +60,7 @@ public class LogWriter {
 	            FileOutputStream fos = new FileOutputStream(fullFilePathAndName);
 	            workbook.write(fos);
 	            fos.close();	            
+	            System.out.println(_fileName + " has been generated.");
 	        } catch (FileNotFoundException e) {
 	            e.printStackTrace();
 	        } catch (IOException e) {
