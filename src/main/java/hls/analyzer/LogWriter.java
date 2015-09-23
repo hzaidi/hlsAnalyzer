@@ -16,7 +16,7 @@ import java.util.logging.*;
 public class LogWriter {
 	
 	//private static final String _filePath = "C:/Users/hzaidi/M3U8ParserLogs/";	
-	private static final String _filePath = "V:/M3U8ParserLogs";
+	//private static final String _filePath = "V:/M3U8ParserLogs";
 	private static String _fileName = "";
 	private static final String _filePostFix = "log";
 	private List<ValidationReport> _errorMessages;
@@ -55,7 +55,8 @@ public class LogWriter {
 
 	        }
 	        try {
-	        	String fullFilePathAndName = _filePath + FilenameUtils.removeExtension(_fileName) + ".xlsx";
+	        	String path = System.getProperty("user.dir");	        	
+	        	String fullFilePathAndName = path + "/" + FilenameUtils.removeExtension(_fileName) + ".xlsx";
 	            FileOutputStream fos = new FileOutputStream(fullFilePathAndName);
 	            workbook.write(fos);
 	            fos.close();	            
