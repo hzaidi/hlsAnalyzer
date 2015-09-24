@@ -39,14 +39,9 @@ public class LogWriter {
             row.createCell(cellIndex++).setCellValue("Details");
 	        for(ValidationReport errorMessage : _errorMessages){
 	            row = studentsSheet.createRow(rowIndex++);
-	            cellIndex = 0;	            
-	            String lineNumber = "";
-	            if(errorMessage.LineNumber == null){
-	            	lineNumber = "";
-	            }else{
-	            	lineNumber = errorMessage.LineNumber.toString();
-	            }
-	            row.createCell(cellIndex++).setCellValue(lineNumber);
+	            cellIndex = 0;            
+	            
+	            row.createCell(cellIndex++).setCellValue(cellIndex);
 
 	            row.createCell(cellIndex++).setCellValue(errorMessage.ErrorTag);
 

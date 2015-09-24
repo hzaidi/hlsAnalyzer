@@ -24,7 +24,7 @@ public class EXTXSTREAMINF extends Validator{
 			if(UtilHelper.match(dataItem,Constants.streamRegex)){
 				int index = _dataFileArray.indexOf(dataItem);
 				int uriIndex = index + 1;
-				pairList.add(new StreamUriContainer(index + 1,dataItem,_dataFileArray.get(uriIndex)));
+				pairList.add(new StreamUriContainer(dataItem,_dataFileArray.get(uriIndex)));
 			}
 		}
 		
@@ -34,7 +34,7 @@ public class EXTXSTREAMINF extends Validator{
 			//Validating the BANDWIDTH attribute
 			String bandWidthStr = UtilHelper.parseStringAttr(tagLine, Constants.bandwidthRegex);
 			if(bandWidthStr == null){
-				errorMsgs.add(new ValidationReport(entry.LineNumber,Constants.EXTXSTREAMINF,_fileName,"BANDWIDTH attribute is required."));
+				errorMsgs.add(new ValidationReport(Constants.EXTXSTREAMINF,_fileName,"BANDWIDTH attribute is required."));
 			}else{
 				int bandWidth= Integer.parseInt(bandWidthStr);
 			}
@@ -48,11 +48,11 @@ public class EXTXSTREAMINF extends Validator{
 			String fileName = entry.Uri;
 			String fullUri = _baseUrl + fileName;
 			if(!UtilHelper.match(fullUri,Constants.extensionRegex)){
-				errorMsgs.add(new ValidationReport(entry.LineNumber + 1,Constants.EXTXSTREAMINF,_fileName,"Extension of the Uri file is invalid"));
+				errorMsgs.add(new ValidationReport(Constants.EXTXSTREAMINF,_fileName,"Extension of the Uri file is invalid"));
 				continue;
 			}			
 			if(!UtilHelper.exists(fullUri)){
-				errorMsgs.add(new ValidationReport(entry.LineNumber + 1,Constants.EXTXSTREAMINF,_fileName,"File " + entry.Uri + " mentioned in the menifest file doest not exist on the server."));
+				errorMsgs.add(new ValidationReport(Constants.EXTXSTREAMINF,_fileName,"File " + entry.Uri + " mentioned in the menifest file doest not exist on the server."));
 			}else{
 				FileReaderHandler fh = new FileReaderHandler(fullUri);
 				List<String> subdataFileArray = new ArrayList<String>();

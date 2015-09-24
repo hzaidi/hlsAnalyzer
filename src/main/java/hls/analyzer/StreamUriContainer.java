@@ -1,12 +1,10 @@
 package hls.analyzer;
 
-public class StreamUriContainer {
-	public int LineNumber;
+public class StreamUriContainer {	
 	public String TagLine;
 	public String Uri;
 	
-	StreamUriContainer(int lineNumber, String tagLine, String uri){
-		LineNumber = lineNumber;
+	StreamUriContainer(String tagLine, String uri){		
 		TagLine = tagLine;
 		Uri= uri;
 	}

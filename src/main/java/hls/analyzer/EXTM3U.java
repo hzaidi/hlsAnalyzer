@@ -16,7 +16,7 @@ public class EXTM3U extends Validator{
 		List<ValidationReport> errorMsgs = new ArrayList<ValidationReport>(); 
 		String tag = _dataFileArray.get(0); // Checking the first tag to be EXTM3U		
 		if(!tag.equals(Constants.EXTM3U)){
-			errorMsgs.add(new ValidationReport(1, Constants.EXTM3U, _fileName, "First line of the file is not "+ Constants.EXTM3U +" tag"));
+			errorMsgs.add(new ValidationReport(Constants.EXTM3U, _fileName, "First line of the file is not "+ Constants.EXTM3U +" tag"));
 		}		
 		return errorMsgs;
 	}

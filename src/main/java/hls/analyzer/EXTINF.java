@@ -21,24 +21,23 @@ public class EXTINF extends Validator{
 	public List<ValidationReport> isValid() throws IOException {
 		List<ValidationReport> errorMsgs = new ArrayList<ValidationReport>();
 		float duration = -1;
-		for (String dataItem : _dataFileArray) {
-			int lineNumber = _dataFileArray.indexOf(dataItem) + 1;
+		for (String dataItem : _dataFileArray) {			
 			if(!dataItem.isEmpty() && UtilHelper.match(dataItem,Constants.extInfDurationRegex)){				
 				String durationValue = UtilHelper.parseStringAttr(dataItem, Constants.extInfDurationRegex);					
 				if(UtilHelper.match(durationValue,Constants.intRegex)){
 					duration =  Float.parseFloat(UtilHelper.parseStringAttr(dataItem, Constants.extInfDurationRegex));
 					if(duration > _duration){
-						errorMsgs.add(new ValidationReport(lineNumber,Constants.EXTINF,_fileName,"EXTINF duration value should not be greater then EXT-X-TARGETDURATION tag duration value."));
+						errorMsgs.add(new ValidationReport(Constants.EXTINF,_fileName,"EXTINF duration value should not be greater then EXT-X-TARGETDURATION tag duration value."));
 					}
 				}else{
-					errorMsgs.add(new ValidationReport(lineNumber,Constants.EXTINF,_fileName,"EXTINF duration number should be an integer or float"));
+					errorMsgs.add(new ValidationReport(Constants.EXTINF,_fileName,"EXTINF duration number should be an integer or float"));
 				}
 				
 			}	
 			if(!dataItem.isEmpty() && FilenameUtils.getBaseName(dataItem) == "ts"){
 				String fullUri = _baseUrl + dataItem;
 				if(!UtilHelper.exists(fullUri)){
-					errorMsgs.add(new ValidationReport(null,Constants.EXTINF,_fileName,dataItem + " file does not exist on the server."));
+					errorMsgs.add(new ValidationReport(Constants.EXTINF,_fileName,dataItem + " file does not exist on the server."));
 				}
 			}
 		}

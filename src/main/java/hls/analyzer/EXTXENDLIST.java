@@ -16,7 +16,7 @@ public class EXTXENDLIST extends Validator{
 		List<ValidationReport> errorMsgs = new ArrayList<ValidationReport>(); 
 		String tag = _dataFileArray.get(_dataFileArray.size() - 1); // Checking the last tag to be EXT-X-ENDLIST	
 		if(!tag.isEmpty() && !tag.equals(Constants.EXTXENDLIST)){
-			errorMsgs.add(new ValidationReport(_dataFileArray.size(), Constants.EXTXENDLIST, _fileName, "Last line of the file is not "+ Constants.EXTXENDLIST +" tag"));
+			errorMsgs.add(new ValidationReport(Constants.EXTXENDLIST, _fileName, "Last line of the file is not "+ Constants.EXTXENDLIST +" tag"));
 		}		
 		return errorMsgs;
 	}
