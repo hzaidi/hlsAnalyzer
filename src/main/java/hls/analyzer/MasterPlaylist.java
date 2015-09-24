@@ -16,8 +16,7 @@ public class MasterPlaylist {
 	public List<ValidationReport> parse() throws IOException{
 		List<ValidationReport> reports = new ArrayList<ValidationReport>();
 		List<Validator> validations = new ArrayList<Validator>();
-		validations.add(new EXTM3U(_dataFileArray,_fileName));
-		validations.add(new EXTXVERSION(_dataFileArray,_fileName));
+		validations.add(new EXTM3U(_dataFileArray,_fileName));		
 		validations.add(new EXTXMEDIA(_dataFileArray,_fileName));
 		validations.add(new EXTXSTREAMINF(_baseUrl,_dataFileArray,_fileName));
 		for (Validator validator : validations) {

@@ -6,8 +6,10 @@ import java.util.List;
 
 public class EXTXTARGETDURATION extends Validator{
 	private List<String> _dataFileArray;
+	private String _baseUrl;
 	private String _fileName;
-	EXTXTARGETDURATION(List<String> dataFileArray,String fileName){
+	EXTXTARGETDURATION(String baseUrl,List<String> dataFileArray,String fileName){
+		_baseUrl = baseUrl;
 		_fileName = fileName;
 		_dataFileArray = dataFileArray;
 	}
@@ -22,7 +24,7 @@ public class EXTXTARGETDURATION extends Validator{
 					String durationValue = UtilHelper.parseStringAttr(dataItem, Constants.durationRegex);
 					if(durationValue.matches(Constants.intRegex)){
 						duration =  Float.parseFloat(UtilHelper.parseStringAttr(dataItem, Constants.durationRegex));
-						errorMsgs.addAll(new EXTINF(_dataFileArray,_fileName, duration).isValid());
+						errorMsgs.addAll(new EXTINF(_baseUrl,_dataFileArray,_fileName, duration).isValid());
 					}else{
 						errorMsgs.add(new ValidationReport(lineNumber,Constants.EXTXTARGETDURATION,_fileName,"EXT-X-TARGETDURATION duration number should be an integer or float"));
 					}

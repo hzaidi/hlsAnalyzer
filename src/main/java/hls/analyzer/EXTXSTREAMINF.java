@@ -58,7 +58,7 @@ public class EXTXSTREAMINF extends Validator{
 				List<String> subdataFileArray = new ArrayList<String>();
 				subdataFileArray = fh.getFileAsArray();
 				if(subdataFileArray != null){		    
-					MediaPlaylist mediaPlaylist = new MediaPlaylist(fileName,subdataFileArray);
+					MediaPlaylist mediaPlaylist = new MediaPlaylist(_baseUrl,fileName,subdataFileArray);
 					errorMsgs.addAll(mediaPlaylist.parse());
 				}
 			}

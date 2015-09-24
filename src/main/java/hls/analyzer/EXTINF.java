@@ -4,11 +4,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FilenameUtils;
+
 public class EXTINF extends Validator{
 	private List<String> _dataFileArray;
+	private String _baseUrl;
 	private String _fileName;
 	private Float _duration;
-	EXTINF(List<String> dataFileArray,String fileName, Float duration){
+	EXTINF(String baseUrl,List<String> dataFileArray,String fileName, Float duration){
+		_baseUrl = baseUrl;
 		_fileName = fileName;
 		_dataFileArray = dataFileArray;
 		_duration = duration;
@@ -23,9 +27,6 @@ public class EXTINF extends Validator{
 				String durationValue = UtilHelper.parseStringAttr(dataItem, Constants.extInfDurationRegex);					
 				if(UtilHelper.match(durationValue,Constants.intRegex)){
 					duration =  Float.parseFloat(UtilHelper.parseStringAttr(dataItem, Constants.extInfDurationRegex));
-					//System.out.println("File: " + _fileName);
-					//System.out.println("duration" + duration);
-					//System.out.println("_duration" + _duration);
 					if(duration > _duration){
 						errorMsgs.add(new ValidationReport(lineNumber,Constants.EXTINF,_fileName,"EXTINF duration value should not be greater then EXT-X-TARGETDURATION tag duration value."));
 					}
@@ -34,6 +35,12 @@ public class EXTINF extends Validator{
 				}
 				
 			}	
+			if(!dataItem.isEmpty() && FilenameUtils.getBaseName(dataItem) == "ts"){
+				String fullUri = _baseUrl + dataItem;
+				if(!UtilHelper.exists(fullUri)){
+					errorMsgs.add(new ValidationReport(null,Constants.EXTINF,_fileName,dataItem + " file does not exist on the server."));
+				}
+			}
 		}
 		return errorMsgs;
 	}
