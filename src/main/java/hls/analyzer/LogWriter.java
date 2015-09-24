@@ -27,6 +27,7 @@ public class LogWriter {
 	}
 	public void Createlog(){
 		if(_errorMessages.size() > 0){
+			System.out.println("In the process of generating the log file.");
 			Workbook workbook = new XSSFWorkbook();
 	        Sheet studentsSheet = workbook.createSheet(FilenameUtils.removeExtension(_fileName) + _filePostFix);	       
 	        int rowIndex = 0;
@@ -60,6 +61,7 @@ public class LogWriter {
 	            FileOutputStream fos = new FileOutputStream(fullFilePathAndName);
 	            workbook.write(fos);
 	            fos.close();	            
+	            System.out.println(FilenameUtils.removeExtension(_fileName) + ".xlsx log file has been generated.");
 	        } catch (FileNotFoundException e) {
 	            e.printStackTrace();
 	        } catch (IOException e) {
@@ -67,6 +69,8 @@ public class LogWriter {
 	        }
 
 
+		}else{
+			System.out.println("No errors found.");
 		}
 	}
 	

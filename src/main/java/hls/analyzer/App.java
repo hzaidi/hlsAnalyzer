@@ -18,24 +18,15 @@ public class App
     	inputReader.close();    	    	
     	FileReaderHandler fh = new FileReaderHandler(filePath);    	
 		String baseUrl = fh.baseUrl();
-		String fileName = fh.fileName();
-		
+		String fileName = fh.fileName();	
+		System.out.println("Reading file.");
 		dataFileArray = fh.getFileAsArray();
 		if(dataFileArray != null){	
+			System.out.println("Parsing in Progress.");
 			MasterPlaylist masterPlayList = new MasterPlaylist(fileName, baseUrl, dataFileArray);
 			reports.addAll(masterPlayList.parse());
-			new LogWriter(fileName,reports).Createlog();
-			/*for (ValidationReport validationReport : reports) {
-				System.out.println("-----------------------------------------------------");
-				System.out.println("Line Number:" + (validationReport.LineNumber == null ? "" : validationReport.LineNumber));
-				System.out.println("Tag:" + validationReport.ErrorTag);
-				System.out.println("File:" + validationReport.FileName);
-				System.out.println("Details:" + validationReport.Detail);
-				System.out.println("-----------------------------------------------------");
-			}
-			*/
-			
-			System.out.println("Finish Parsing.");
+			System.out.println("Finish Parsing.");			
+			new LogWriter(fileName,reports).Createlog();					
 		}else{
 			System.out.println("Unable to read content from the file specified.");
 		}
