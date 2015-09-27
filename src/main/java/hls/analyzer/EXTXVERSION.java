@@ -17,7 +17,7 @@ public class EXTXVERSION extends Validator{
 		List<ValidationReport> errorMsgs = new ArrayList<ValidationReport>(); 
 		int version = 0;
 		//Checking if duplicate Version tags exist
-		if(!checkDuplicateVersionTag()){
+		if(multipleVersionTagsDetected()){
 			errorMsgs.add(new ValidationReport(Constants.EXTXVERSION,_fileName,"Invalid file because multiple EXT-X-VERSION tag detected."));
 		}
 		if(errorMsgs.size() == 0){
@@ -90,14 +90,13 @@ public class EXTXVERSION extends Validator{
 			int version) {
 		//A Media Playlist MUST indicate a EXT-X-VERSION of 3 or higher if it contains:
 		//Floating-point EXTINF duration values.
-		for (String dataItemV3 : _dataFileArray) {
-			boolean isFloat = false;
+		for (String dataItemV3 : _dataFileArray) {			
 			if(!dataItemV3.isEmpty() && UtilHelper.match(dataItemV3,Constants.extInfDurationRegex)){	
 				String durationValue = UtilHelper.parseStringAttr(dataItemV3, Constants.extInfDurationRegex);					
 				if(UtilHelper.match(durationValue,Constants.intRegex)){
 					float duration =  Float.parseFloat(UtilHelper.parseStringAttr(dataItemV3, Constants.extInfDurationRegex));
 					if(duration != Math.round(duration) && version < 3){
-						errorMsgs.add(new ValidationReport(Constants.EXTXVERSION,_fileName,"Version number is "+ version +" and EXTINF duration values are in floating-point values."));
+						errorMsgs.add(new ValidationReport(Constants.EXTXVERSION,_fileName,"Version number is "+ version +" which is less then 3 and EXTINF duration values are in floating-point values."));
 					}
 				}
 			}
@@ -110,19 +109,19 @@ public class EXTXVERSION extends Validator{
 		//The IV attribute of the EXT-X-KEY tag.
 		String dataItemV2 = UtilHelper.dataItemByTag(_dataFileArray,Constants.EXTXKEY);
 		String iv = (dataItemV2 == null) ? null : UtilHelper.parseStringAttr(dataItemV2,Constants.ivRegex);
-		if(iv == null && version >= 2){
+		if(iv == null && version >= 2 && dataItemV2 != null){
 			errorMsgs.add(new ValidationReport(Constants.EXTXVERSION,_fileName,"Version number is "+ version +" and unable to detect the IV attribute on EXTXKEY."));
 		}
 	}
 	
-	private boolean checkDuplicateVersionTag(){
+	private boolean multipleVersionTagsDetected(){
 		int count = 0;
 		for (String dataItem : _dataFileArray) {
 			if(UtilHelper.IsMatching(dataItem,Constants.versionRegex)){
 				count++;
 			}
 		}
-		return count == 0;
+		return count >= 2;
 	}
 	
 	

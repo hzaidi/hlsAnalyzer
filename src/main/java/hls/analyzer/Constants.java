@@ -30,7 +30,7 @@ public class Constants {
 	
 	
 	// Regular Expression to validate tags
-	public static final String versionRegex = "^" + EXTXVERSION + ":(\\d+(?:\\.\\d+)?)";
+	public static final String versionRegex = "^" + EXTXVERSION + ":(\\d+(?:\\.\\d+)?|[A-Z]+)";
 	public static final String durationRegex = "^" + EXTXTARGETDURATION + ":(\\d+(?:\\.\\d+)?)";
 	public static final String extInfDurationRegex = "^" + EXTINF + ":(\\d+(?:\\.\\d+)?|[A-Z]+)";	
 	public static final String mediaRegex = "^" + EXTXMEDIA + ":(.*)";	
