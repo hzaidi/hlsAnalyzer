@@ -33,9 +33,9 @@ public class EXTINF extends Validator{
 					errorMsgs.add(new ValidationReport(Constants.EXTINF,_fileName,"EXTINF duration number should be an integer or float"));
 				}
 				
-			}	
-			if(!dataItem.isEmpty() && FilenameUtils.getBaseName(dataItem) == "ts"){
-				String fullUri = _baseUrl + dataItem;
+			}			
+			if(!dataItem.isEmpty() && FilenameUtils.getExtension(FilenameUtils.getName(dataItem)).equals("ts")){
+				String fullUri = UtilHelper.isUrl(dataItem) ? dataItem : _baseUrl + dataItem;
 				if(!UtilHelper.exists(fullUri)){
 					errorMsgs.add(new ValidationReport(Constants.EXTINF,_fileName,dataItem + " file does not exist on the server."));
 				}

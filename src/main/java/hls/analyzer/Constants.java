@@ -23,18 +23,25 @@ public class Constants {
 	public static final String EXTINF = "#EXTINF";
 	public static final String EXTXENDLIST = "#EXT-X-ENDLIST";
 	public static final String EXTXKEY = "#EXT-X-KEY";
+	public static final String EXTXBYTERANGE = "#EXT-X-BYTERANGE";
+	public static final String EXTXIFRAMESONLY = "#EXT-X-I-FRAMES-ONLY";
+	public static final String EXTXMAP = "#EXT-X-MAP";
+	
 	
 	
 	// Regular Expression to validate tags
 	public static final String versionRegex = "^" + EXTXVERSION + ":(\\d+(?:\\.\\d+)?)";
 	public static final String durationRegex = "^" + EXTXTARGETDURATION + ":(\\d+(?:\\.\\d+)?)";
-	public static final String extInfDurationRegex = "^" + EXTINF + ":(\\d+(?:\\.\\d+)?)";	
+	public static final String extInfDurationRegex = "^" + EXTINF + ":(\\d+(?:\\.\\d+)?|[A-Z]+)";	
 	public static final String mediaRegex = "^" + EXTXMEDIA + ":(.*)";	
 	public static final String streamRegex = "^" + EXTXSTREAMINF + ":(.*)";
 	public static final String typeRegex = "(TYPE=(AUDIO|VIDEO|SUBTITLES|CLOSED-CAPTION))";
 	public static final String uriRegex = "(URI=\""+ urlRegex +"\")";
 	public static final String groupRegex = "(GROUP-ID=\"(.*)\")";
 	public static final String bandwidthRegex = "(BANDWIDTH=(\\d+$))";
+	public static final String ivRegex = "(IV=\"(.*)\")";
+	public static final String keyFormatRegex = "(KEYFORMAT=\"(.*)\")";
+	public static final String keyFormatVersionsRegex = "(KEYFORMATVERSIONS=\"(.*)\")";
 	
 	
 		
