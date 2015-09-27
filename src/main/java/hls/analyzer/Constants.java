@@ -22,7 +22,7 @@ public class Constants {
 	public static final String EXTXTARGETDURATION = "#EXT-X-TARGETDURATION";
 	public static final String EXTINF = "#EXTINF";
 	public static final String EXTXENDLIST = "#EXT-X-ENDLIST";
-	
+	public static final String EXTXKEY = "#EXT-X-KEY";
 	
 	
 	// Regular Expression to validate tags

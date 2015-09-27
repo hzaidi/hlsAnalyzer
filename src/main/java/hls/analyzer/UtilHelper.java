@@ -2,6 +2,7 @@ package hls.analyzer;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,5 +41,18 @@ public class UtilHelper {
 	    catch (Exception e) {	      
 	       return false;
 	    }
-	  }  
+	  }
+	
+	public static String dataItemByTag(List<String>_dataFileArray, String tag){
+		for (String dataItem : _dataFileArray) {		
+			if(IsMatching(dataItem, tag)){
+				return dataItem;
+			}	
+		}				
+		return null;
+	}
+	
+	public static boolean IsMatching(String dataItem, String tag){
+		return (!dataItem.isEmpty() && UtilHelper.match(dataItem,tag));			
+	}
 }

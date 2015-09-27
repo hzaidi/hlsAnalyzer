@@ -16,24 +16,20 @@ public class EXTXTARGETDURATION extends Validator{
 	@Override
 	public List<ValidationReport> isValid() throws IOException {
 		List<ValidationReport> errorMsgs = new ArrayList<ValidationReport>(); 
-		Float duration = (float) -1;
-		for (String dataItem : _dataFileArray) {			
-			if(!dataItem.isEmpty() && dataItem.matches(Constants.durationRegex)){
-				if(duration < 0){
-					String durationValue = UtilHelper.parseStringAttr(dataItem, Constants.durationRegex);
-					if(durationValue.matches(Constants.intRegex)){
-						duration =  Float.parseFloat(UtilHelper.parseStringAttr(dataItem, Constants.durationRegex));
-						errorMsgs.addAll(new EXTINF(_baseUrl,_dataFileArray,_fileName, duration).isValid());
-					}else{
-						errorMsgs.add(new ValidationReport(Constants.EXTXTARGETDURATION,_fileName,"EXT-X-TARGETDURATION duration number should be an integer or float"));
-					}
-				}		
-			}
+		
+		String dataItem = UtilHelper.dataItemByTag(_dataFileArray,Constants.durationRegex);
+		if(dataItem == null){
+			errorMsgs.add(new ValidationReport(Constants.EXTXTARGETDURATION,_fileName,"EXT-X-TARGETDURATION tag not detected which make this file invalid."));
+		}else{
+			String durationValue = UtilHelper.parseStringAttr(dataItem, Constants.durationRegex);
+			if(durationValue.matches(Constants.intRegex)){
+				Float duration =  Float.parseFloat(UtilHelper.parseStringAttr(dataItem, Constants.durationRegex));
+				errorMsgs.addAll(new EXTINF(_baseUrl,_dataFileArray,_fileName, duration).isValid());
+			}else{
+				errorMsgs.add(new ValidationReport(Constants.EXTXTARGETDURATION,_fileName,"EXT-X-TARGETDURATION duration number should be an integer or float"));
+			}					
 		}
 		
-		if(duration < 0){
-			errorMsgs.add(new ValidationReport(Constants.EXTXTARGETDURATION,_fileName,"EXT-X-TARGETDURATION tag not detected which make this file invalid."));
-		}
 		
 		return errorMsgs;
 	}
