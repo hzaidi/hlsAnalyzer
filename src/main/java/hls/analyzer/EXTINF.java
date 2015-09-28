@@ -30,6 +30,7 @@ public class EXTINF extends Validator{
 				String durationValue = UtilHelper.parseStringAttr(dataItem, Constants.extInfDurationRegex);					
 				if(UtilHelper.match(durationValue,Constants.intRegex)){
 					duration =  Float.parseFloat(UtilHelper.parseStringAttr(dataItem, Constants.extInfDurationRegex));
+					//Duration specified on the TARGET DURATION should be greater than INF Duration value
 					if(duration > _duration){
 						errorMsgs.add(new ValidationReport(Constants.EXTINF,_fileName,"EXTINF duration value should not be greater then EXT-X-TARGETDURATION tag duration value."));
 					}
@@ -38,21 +39,29 @@ public class EXTINF extends Validator{
 				}
 				
 			}			
-			if(!dataItem.isEmpty() && FilenameUtils.getExtension(FilenameUtils.getName(dataItem)).equals("ts")){
+			// Reading the .ts files string line
+			if(!dataItem.isEmpty() && FilenameUtils.getExtension(FilenameUtils.getName(dataItem)).equals("ts")){				
 				String fullUri = UtilHelper.isUrl(dataItem) ? dataItem : _baseUrl + dataItem;
+				//Url's should be valid and should exist on the server.
 				if(!UtilHelper.exists(fullUri)){
 					errorMsgs.add(new ValidationReport(Constants.EXTINF,_fileName,dataItem + " file does not exist on the server."));
 				}
+				//Parsing the Post fix number specified on the ts files 
 				String postFixNumber =UtilHelper.parseStringAttr(dataItem,"_(\\d+)");
 				tsFilesPostFixNumbers.add(Integer.parseInt(postFixNumber));				
 			}
 		}
 		
-		if(tsFilesPostFixNumbers.size() > 1){	
+		// if the ts files are more than onw...
+		// We should check for duplication and
+		// Missing files in the sequence		
+		if(tsFilesPostFixNumbers.size() > 1){
+			// Finding the duplicates
 			List<Integer> duplicates = findDuplicates(tsFilesPostFixNumbers);
 			for (Integer integer : duplicates) {
 				errorMsgs.add(new ValidationReport(Constants.EXTINF,_fileName, FilenameUtils.removeExtension(_fileName)+"_" + integer + ".ts is duplicate."));
 			}
+			// Finding the Missing files in the sequence.
 			List<Integer> missing = missingInSequence(tsFilesPostFixNumbers);
 			for (Integer integer : missing) {
 				errorMsgs.add(new ValidationReport(Constants.EXTINF,_fileName, FilenameUtils.removeExtension(_fileName)+"_" + integer + ".ts is missing in the sequence."));
