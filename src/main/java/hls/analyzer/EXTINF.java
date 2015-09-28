@@ -74,14 +74,13 @@ public class EXTINF extends Validator{
 	public List<Integer> findDuplicates(List<Integer> listContainingDuplicates)
 	{ 
 	  final List<Integer> setToReturn = new ArrayList<Integer>(); 
-	  final Set<Integer> set1 = new HashSet();
+	  final Set<Integer> set1 = new HashSet<Integer>();
 
 	  for (Integer yourInt : listContainingDuplicates)
 	  {
-	   if (!set1.add(yourInt))
-	   {
-	    setToReturn.add(yourInt);
-	   }
+		   if (!set1.add(yourInt)) {
+			   setToReturn.add(yourInt);
+		   }
 	  }
 	  return setToReturn;
 	}
@@ -89,8 +88,8 @@ public class EXTINF extends Validator{
 	public List<Integer> missingInSequence(List<Integer> listContainingMissing)
 	{ 
 		final List<Integer> setToReturn = new ArrayList<Integer>();
-		int first = listContainingMissing.get(0); // sets the first value in seq. to var
-		int size = listContainingMissing.size(); // sets the seq size to var
+		int first = listContainingMissing.get(0); 
+		int size = listContainingMissing.size();
 		for (int i = 0; i < size; i++)
 		{
 		    if ((first + i) != listContainingMissing.get(i)) {
