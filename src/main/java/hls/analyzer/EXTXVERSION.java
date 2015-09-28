@@ -42,8 +42,7 @@ public class EXTXVERSION extends Validator{
 			
 			validateForVersion4(errorMsgs, version);			
 			
-			validateForVersion5(errorMsgs, version);
-			
+			validateForVersion5(errorMsgs, version);			
 			
 		}
 		// TODO https://datatracker.ietf.org/doc/draft-pantos-http-live-streaming/?include_text=1
