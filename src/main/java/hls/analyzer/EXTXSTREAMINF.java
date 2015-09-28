@@ -1,11 +1,8 @@
 package hls.analyzer;
 
 import java.io.IOException;
-import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import java.util.Map.Entry;
 
 public class EXTXSTREAMINF extends Validator{
 	private List<String> _dataFileArray;
