@@ -41,7 +41,7 @@ public class LogWriter {
 	            row = studentsSheet.createRow(rowIndex++);
 	            cellIndex = 0;            
 	            
-	            row.createCell(cellIndex++).setCellValue(cellIndex);
+	            row.createCell(cellIndex++).setCellValue(rowIndex - 1);
 
 	            row.createCell(cellIndex++).setCellValue(errorMessage.ErrorTag);
 
