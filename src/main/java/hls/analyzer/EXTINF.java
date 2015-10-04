@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.apache.commons.io.FilenameUtils;
 
@@ -12,8 +13,8 @@ public class EXTINF extends Validator{
 	private List<String> _dataFileArray;
 	private String _baseUrl;
 	private String _fileName;
-	private Float _duration;
-	EXTINF(String baseUrl,List<String> dataFileArray,String fileName, Float duration){
+	private String _duration;
+	EXTINF(String baseUrl,List<String> dataFileArray,String fileName, String duration){
 		_baseUrl = baseUrl;
 		_fileName = fileName;
 		_dataFileArray = dataFileArray;
@@ -23,16 +24,12 @@ public class EXTINF extends Validator{
 	public List<ValidationReport> isValid() throws IOException {
 		List<ValidationReport> errorMsgs = new ArrayList<ValidationReport>();
 		List<Integer> tsFilesPostFixNumbers = new ArrayList<Integer>(); 
-		float duration = -1;
+		
 		for (String dataItem : _dataFileArray) {			
 			if(!dataItem.isEmpty() && UtilHelper.match(dataItem,Constants.extInfDurationRegex)){				
 				String durationValue = UtilHelper.parseStringAttr(dataItem, Constants.extInfDurationRegex);					
 				if(UtilHelper.match(durationValue,Constants.intRegex)){
-					duration =  Float.parseFloat(UtilHelper.parseStringAttr(dataItem, Constants.extInfDurationRegex));
-					//Duration specified on the TARGET DURATION should be greater than INF Duration value
-					if(duration > _duration){
-						errorMsgs.add(new ValidationReport(Constants.EXTINF,_fileName,"EXTINF duration value should not be greater then EXT-X-TARGETDURATION tag duration value."));
-					}
+					errorMsgs.add(checkDurations(_duration,durationValue));		
 				}else{
 					errorMsgs.add(new ValidationReport(Constants.EXTINF,_fileName,"EXTINF duration number should be an integer or float"));
 				}
@@ -47,7 +44,9 @@ public class EXTINF extends Validator{
 				}
 				//Parsing the Post fix number specified on the ts files 
 				String postFixNumber =UtilHelper.parseStringAttr(dataItem,"_(\\d+)");
-				tsFilesPostFixNumbers.add(Integer.parseInt(postFixNumber));				
+				if(postFixNumber != null){
+					tsFilesPostFixNumbers.add(Integer.parseInt(postFixNumber));
+				}
 			}
 		}
 		
@@ -70,7 +69,35 @@ public class EXTINF extends Validator{
 		return errorMsgs;
 	}
 	
-	public List<Integer> findDuplicates(List<Integer> listContainingDuplicates)
+	
+	private ValidationReport checkDurations(String targerDuration, String infDuration){
+		
+		if(isFloat(targerDuration) && isFloat(infDuration)){
+			if(Float.parseFloat(infDuration) > Float.parseFloat(targerDuration)){
+				return new ValidationReport(Constants.EXTINF,_fileName,"EXTINF duration value should not be greater then EXT-X-TARGETDURATION tag duration value.");
+			}
+		}else if (isInteger(targerDuration) && isInteger(infDuration)){
+			if(Integer.parseInt(infDuration) > Integer.parseInt(targerDuration)){
+				return new ValidationReport(Constants.EXTINF,_fileName,"EXTINF duration value should not be greater then EXT-X-TARGETDURATION tag duration value.");
+			}
+		}else{
+			return new ValidationReport(Constants.EXTINF,_fileName,"EXTINF duration value and the EXT-X-TARGETDURATION tag duration value are of different data types.");
+		}
+		return null;	
+	}
+	
+	public boolean isFloat(String value){
+		String decimalPattern = "([0-9]*)\\.([0-9]*)";  
+		return Pattern.matches(decimalPattern, value);
+	}
+	
+	public boolean isInteger(String value){
+		String decimalPattern = "([0-9]*)";  
+		return Pattern.matches(decimalPattern, value);
+	}
+	
+	
+	private List<Integer> findDuplicates(List<Integer> listContainingDuplicates)
 	{ 
 	  final List<Integer> setToReturn = new ArrayList<Integer>(); 
 	  final Set<Integer> set1 = new HashSet<Integer>();
@@ -84,7 +111,7 @@ public class EXTINF extends Validator{
 	  return setToReturn;
 	}
 	
-	public List<Integer> missingInSequence(List<Integer> listContainingMissing)
+	private List<Integer> missingInSequence(List<Integer> listContainingMissing)
 	{ 
 		final List<Integer> setToReturn = new ArrayList<Integer>();
 		int first = listContainingMissing.get(0); 

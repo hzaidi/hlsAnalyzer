@@ -23,13 +23,12 @@ public class EXTXTARGETDURATION extends Validator{
 		}else{
 			String durationValue = UtilHelper.parseStringAttr(dataItem, Constants.durationRegex);
 			if(durationValue.matches(Constants.intRegex)){
-				Float duration =  Float.parseFloat(UtilHelper.parseStringAttr(dataItem, Constants.durationRegex));
+				String duration =  UtilHelper.parseStringAttr(dataItem, Constants.durationRegex);
 				errorMsgs.addAll(new EXTINF(_baseUrl,_dataFileArray,_fileName, duration).isValid());
 			}else{
 				errorMsgs.add(new ValidationReport(Constants.EXTXTARGETDURATION,_fileName,"EXT-X-TARGETDURATION duration number should be an integer or float"));
 			}					
 		}
-		
 		
 		return errorMsgs;
 	}
