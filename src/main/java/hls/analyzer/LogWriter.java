@@ -36,16 +36,19 @@ public class LogWriter {
             row.createCell(cellIndex++).setCellValue("File");
             row.createCell(cellIndex++).setCellValue("Details");
 	        for(ValidationReport errorMessage : _errorMessages){
-	            row = studentsSheet.createRow(rowIndex++);
-	            cellIndex = 0;            
-	            
-	            row.createCell(cellIndex++).setCellValue(rowIndex - 1);
-
-	            row.createCell(cellIndex++).setCellValue(errorMessage.ErrorTag);
-
-	            row.createCell(cellIndex++).setCellValue(errorMessage.FileName);
-
-	            row.createCell(cellIndex++).setCellValue(errorMessage.Detail);
+	        	if(errorMessage != null){
+		        	row = studentsSheet.createRow(rowIndex++);
+		        	
+		            cellIndex = 0;            
+		            
+		            row.createCell(cellIndex++).setCellValue(rowIndex - 1);
+	
+		            row.createCell(cellIndex++).setCellValue(errorMessage.ErrorTag);
+	
+		            row.createCell(cellIndex++).setCellValue(errorMessage.FileName);
+	
+		            row.createCell(cellIndex++).setCellValue(errorMessage.Detail);
+	        	}
 
 	        }
 	        try {

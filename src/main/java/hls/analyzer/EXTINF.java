@@ -38,7 +38,7 @@ public class EXTINF extends Validator{
 			// Reading the .ts files string line
 			if(!dataItem.isEmpty() && FilenameUtils.getExtension(FilenameUtils.getName(dataItem)).equals("ts")){				
 				String fullUri = UtilHelper.isUrl(dataItem) ? dataItem : _baseUrl + dataItem;
-				//Url's should be valid and should exist on the server.
+				//Url's should be valid and should exist on the server.				
 				if(!UtilHelper.exists(fullUri)){
 					errorMsgs.add(new ValidationReport(Constants.EXTINF,_fileName,dataItem + " file does not exist on the server."));
 				}
