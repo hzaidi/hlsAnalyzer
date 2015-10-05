@@ -52,15 +52,15 @@ public class EXTXSTREAMINF extends Validator{
 			if(!UtilHelper.exists(fullUri)){
 				errorMsgs.add(new ValidationReport(Constants.EXTXSTREAMINF,_fileName,"File " + entry.Uri + " mentioned in the menifest file doest not exist on the server."));
 			}else{
-				System.out.println(">>>>>>>>>> Starting analyzing "+ entry.Uri +" file.");
+				System.out.println("---------------> Starting analyzing "+ entry.Uri +" file.");
 				FileReaderHandler fh = new FileReaderHandler(fullUri);
 				List<String> subdataFileArray = new ArrayList<String>();
 				subdataFileArray = fh.getFileAsArray();
 				if(subdataFileArray != null){		    
 					MediaPlaylist mediaPlaylist = new MediaPlaylist(_baseUrl,fileName,subdataFileArray);
-					System.out.println(">>>>>>>>>> Analyzing "+ entry.Uri +" file.");
+					System.out.println("---------------> Analyzing "+ entry.Uri +" file.");
 					errorMsgs.addAll(mediaPlaylist.parse());
-					System.out.println(">>>>>>>>>> Finish analyzing "+ entry.Uri +" file.");
+					System.out.println("---------------> Finish analyzing "+ entry.Uri +" file.");
 				}
 			}
 			
