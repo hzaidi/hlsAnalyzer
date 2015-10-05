@@ -50,6 +50,7 @@ public class EXTXSTREAMINF extends Validator{
 			}		
 			System.out.println("Reteriving "+ entry.Uri +" file.");
 			if(!UtilHelper.exists(fullUri)){
+				System.out.println("---------------> Unable to reterive "+ entry.Uri +" file.");
 				errorMsgs.add(new ValidationReport(Constants.EXTXSTREAMINF,_fileName,"File " + entry.Uri + " mentioned in the menifest file doest not exist on the server."));
 			}else{
 				System.out.println("---------------> Starting analyzing "+ entry.Uri +" file.");
